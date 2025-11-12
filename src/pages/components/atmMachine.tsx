@@ -11,22 +11,33 @@ type AtmMachineProps = {
 export function AtmMachine({
   full = false,
 }: AtmMachineProps) {
-  const style = {
-    width: full ? '1199px' : '550px',
-  }
+  const screenWidth = window.innerWidth;
+  const percentageEnlargment = 1.7;
+  const width = 550
 
-  const leftButtons = [1, 2, 3, 4]
-  const rightButtons = [5, 6, 7, 8]
+  const leftButtons = [1, 2, 3, 4];
+  const rightButtons = [5, 6, 7, 8];
 
   return (
-    <div className={`
-      ${
-        full ? "absolute top-0 left-0 w-full h-screen flex justify-center items-center" :
-        "relative"
+    <div
+      className={`
+        ${
+          full ? "absolute top-[30%] z-50 flex justify-center items-center"
+          : "relative"
+        }
+        rounded-xl overflow-hidden`
       }
-      rounded-xl overflow-hidden`
-    }>
-      <div className="relative overflow-hidden bg-white" style={style}>
+      style={{
+        left: full ? `${(((width * 1.6) - width) / 2) + ((screenWidth - (width * 1.6)) / 2)}px` : "0",
+        scale: full ? `${percentageEnlargment}` : "1"
+      }}
+    >
+      <div
+        className="relative overflow-hidden bg-white"
+        style={{
+          width: `${width}px`,
+        }}
+      >
         <Image src={AtmBase} alt="ATM Machine" className="w-full h-full" />
         <div className="absolute flex gap-4 top-0 left-0 w-full h-full p-3">
           <div className="bg-gray-900 w-16 h-full p-2 flex flex-col justify-end gap-4">
