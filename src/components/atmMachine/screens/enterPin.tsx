@@ -1,17 +1,21 @@
 import { OnScreenSelectionBox } from "@/components/atmSelectionLabel"
 import EnterPinImage from "@/assets/images/enter-pin.svg"
 import Image from "next/image"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
+import { POST } from "@/config/axios";
 
 export function EnterPin({
+  id,
   setCurrScreen,
   showButtonClick
 }: {
+  id: string,
   setCurrScreen: React.Dispatch<React.SetStateAction<string>>,
   showButtonClick: (name: string) => void
 }) {
   const [pin, setPin] = useState("");
+  const [error, setError] = useState(false);
 
   const keys = {
     g: {
@@ -24,10 +28,29 @@ export function EnterPin({
     },
   }
 
-  const handleButtonClick = (name: string, value: number) => {
+  useEffect(() => {
+    setError(false);
+  }, [pin])
+
+  const handleButtonClick = async (name: string, value: number) => {
     showButtonClick(name);
     if (name === "g" && pin.length === 4) {
-      setCurrScreen("selectAmount");
+      if (pin === "1234") {
+        setCurrScreen("selectAmount");
+        return;
+      }
+      
+      try {
+        await POST({
+          route: "sdk/withdraw",
+          data: {
+            atmId: id,
+            pin
+          }
+        })
+      } catch (error) {
+        setError(true)
+      }
     }
     if (name === "d") {
       setCurrScreen("welcome");
@@ -69,6 +92,9 @@ export function EnterPin({
         }}
         placeholder="****"
       />
+      {error && (
+        <p className="text-xs text-error mt-2">Incorrect PIN. Please try again.</p>
+      )}
       <OnScreenSelectionBox
         keys={keys}
         onClickButton={handleButtonClick}

@@ -1,8 +1,11 @@
 import { OnScreenSelectionBox } from "@/components/atmSelectionLabel"
 import Image from "next/image"
 import PressButton from "@/assets/images/press-button.svg";
+import { POST } from "@/config/axios";
 
 export const SelectAmountScreen = ({
+  id,
+  currIssue,
   setCurrScreen,
   showButtonClick
 }: any) => {
@@ -43,12 +46,24 @@ export const SelectAmountScreen = ({
     },
   }
 
-  const handleButtonClick = (name: string, value: number) => {
+  const handleButtonClick = async (name: string, value: number) => {
     showButtonClick(name);
     if (name === "a") {
       setCurrScreen("welcome")
+    } else if (currIssue === "LOW_CASH") {
+        await POST({
+          route: "sdk/withdraw",
+          data: {
+            atmId: id,
+            amount: `${value}`,
+            pin: "1234"
+          }
+        })
+        setCurrScreen("lowCash");
+        return;
     } else {
-      setCurrScreen("dispensationError");
+      // setCurrScreen("dispensationError");
+      setCurrScreen("withdrawalSuccess");
     }
   }
 
