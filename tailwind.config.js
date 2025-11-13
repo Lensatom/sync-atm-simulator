@@ -11,7 +11,8 @@ module.exports = {
       colors: {
         "primary": "#EB5017",
         "atm-dark-gray": "#2E3038",
-        "atm-light-gray": "#E5E7EB",
+        "atm-light-gray": "#747682",
+        "success": "#27AE60"
       }
     },
   },

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { AtmMachine } from "./components"
+import { AtmMachine } from "@/components"
 
 export function AtmStand() {
   const atmMachines = [1, 2, 3, 4]
