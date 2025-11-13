@@ -12,7 +12,7 @@ export function AtmStand() {
       {activeMachine !== 0 && (
         <button
           onClick={() => setActiveMachine(0)}
-          className="absolute top-0 left-0"
+          className="absolute top-2 left-2"
         >
           Back to ATM Selection
         </button>

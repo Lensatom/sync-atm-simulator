@@ -29,6 +29,22 @@ export function AtmMachine({
 
   const [currScreen, setCurrScreen] = useState("welcome");
   const [buttonClicked, setButtonClicked] = useState<string>("");
+  const [currIssue, setCurrIssue] = useState<string>("");
+
+  const possibleIssues = [
+    "",
+    "NETWORK_OUTAGE",
+    "CONFIGURATION_ISSUE",
+    "TRANSACTION_FAILURE",
+    "SSL_EXPIRED",
+    "MEMORY_FULL",
+    "CASH_DISPENSER_JAMMED",
+    "PRINTER_JAMMED",
+    "LOW_CASH",
+    "CARD_RETAINED",
+    "MALWARE_DETECTED"
+  ]
+
 
   const showButtonClick = (name: string) => {
     setButtonClicked(name);
@@ -54,73 +70,80 @@ export function AtmMachine({
   }, []);
 
   return (
-    <div
-      className={`
-        ${full ? "absolute top-[30%] z-50 flex justify-center items-center"
-          : "relative"}
-        rounded-xl overflow-hidden`
-      }
-      style={{
-        left: full && screenWidth
-          ? `${(((width * 1.6) - width) / 2) + ((screenWidth - (width * 1.6)) / 2)}px`
-          : "0",
-        scale: full ? `${percentageEnlargment}` : "1"
-      }}
-    >
+    <>
+      {full && <select className="absolute top-2 right-2">
+        {possibleIssues.map(issue => (
+          <option key={issue} value={issue} selected={currIssue === issue} onClick={() => setCurrIssue(issue)}>{issue}</option>
+        ))}
+      </select>}
       <div
-        className="relative overflow-hidden bg-white"
+        className={`
+          ${full ? "absolute top-[30%] z-50 flex justify-center items-center"
+            : "relative"}
+          rounded-xl overflow-hidden`
+        }
         style={{
-          width: `${width}px`,
+          left: full && screenWidth
+            ? `${(((width * 1.6) - width) / 2) + ((screenWidth - (width * 1.6)) / 2)}px`
+            : "0",
+          scale: full ? `${percentageEnlargment}` : "1"
         }}
       >
-        <Image src={AtmBase} alt="ATM Machine" className="w-full h-full" />
-        
-        <div className="absolute flex gap-4 top-0 left-0 w-full h-full p-3">
-          <div className="bg-[#464853] w-16 h-full p-2 flex flex-col justify-end gap-4">
-            {leftButtons.map((button:any) => {
-              const isButtonClicked = buttonClicked === button;
-              return (
-                <Image
-                  key={button}
-                  src={isButtonClicked ? ActiveAtmButton : AtmButton}
-                  alt="ATM Button"
-                />
-              )
-            })}
-          </div>
+        <div
+          className="relative overflow-hidden bg-white"
+          style={{
+            width: `${width}px`,
+          }}
+        >
+          <Image src={AtmBase} alt="ATM Machine" className="w-full h-full" />
+          
+          <div className="absolute flex gap-4 top-0 left-0 w-full h-full p-3">
+            <div className="bg-[#464853] w-16 h-full p-2 flex flex-col justify-end gap-4">
+              {leftButtons.map((button:any) => {
+                const isButtonClicked = buttonClicked === button;
+                return (
+                  <Image
+                    key={button}
+                    src={isButtonClicked ? ActiveAtmButton : AtmButton}
+                    alt="ATM Button"
+                  />
+                )
+              })}
+            </div>
 
-          <div className="relative w-full h-full bg-white flex flex-col">
-            <div className="flex justify-between items-center px-6 py-2">
-              <div className="w-[65%] text-[7px] flex justify-between">
-                <p className="font-medium">
-                  <span className="font-normal text-gray-600">ID: </span>
-                  ATM #ZB-024
-                </p>
-                <p>AC Power</p>
-                <p>10:23 AM</p>
-                <p>AI Monitoring Active</p>
+            <div className="relative w-full h-full bg-white flex flex-col">
+              <div className="flex justify-between items-center px-6 py-2">
+                <div className="w-[65%] text-[7px] flex justify-between">
+                  <p className="font-medium">
+                    <span className="font-normal text-gray-600">ID: </span>
+                    ATM #ZB-024
+                  </p>
+                  <p>AC Power</p>
+                  <p>10:23 AM</p>
+                  <p>AI Monitoring Active</p>
+                </div>
+                <Image src={ZenithLogo} alt="Zenith Logo" />
               </div>
-              <Image src={ZenithLogo} alt="Zenith Logo" />
+              <div className="h-full w-full">
+                {screenList[currScreen]}
+              </div>
             </div>
-            <div className="h-full w-full">
-              {screenList[currScreen]}
-            </div>
-          </div>
 
-          <div className="bg-[#464853] w-16 h-full p-2 flex flex-col justify-end gap-4">
-            {rightButtons.map((button:any) => {
-              const isButtonClicked = buttonClicked === button;
-              return (
-                <Image
-                  key={button}
-                  src={isButtonClicked ? ActiveAtmButton : AtmButton}
-                  alt="ATM Button"
-                />
-              )
-            })}
+            <div className="bg-[#464853] w-16 h-full p-2 flex flex-col justify-end gap-4">
+              {rightButtons.map((button:any) => {
+                const isButtonClicked = buttonClicked === button;
+                return (
+                  <Image
+                    key={button}
+                    src={isButtonClicked ? ActiveAtmButton : AtmButton}
+                    alt="ATM Button"
+                  />
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
