@@ -15,6 +15,7 @@ import { DispensationErrorScreen } from "./screens/dispensationError";
 import NoLifeScreen from "./screens/noLife";
 import { getAtmStateLocal, saveAtmStateLocal } from "@/helpers";
 import { POST, PUT } from "@/config/axios";
+import { log } from "util";
 
 type AtmMachineProps = {
   full?: boolean;
@@ -86,13 +87,13 @@ export function AtmMachine({
 
   const screenList:any = useMemo(() => ({
     welcome: <WelcomeScreen setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
-    processingCard: <ProcessingCardScreen setCurrScreen={setCurrScreen} />,
+    processingCard: <ProcessingCardScreen id={id} setCurrScreen={setCurrScreen} currIssue={currIssue} />,
     enterPin: <EnterPin setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
     selectAmount: <SelectAmountScreen setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
     withdrawalSuccess: <WithdrawalSuccessScreen setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
     dispensationError: <DispensationErrorScreen setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
     noLife: <NoLifeScreen />,
-  }), []);
+  }), [currIssue]);
 
   useEffect(() => {
     const update = () => setScreenWidth(window.innerWidth);

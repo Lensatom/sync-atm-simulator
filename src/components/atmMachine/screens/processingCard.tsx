@@ -1,17 +1,37 @@
 import Image from "next/image";
 import { useEffect } from "react"
 import Loader from "@/assets/images/loader.svg"; 
+import { POST } from "@/config/axios";
 
 export function ProcessingCardScreen({
-  setCurrScreen
+  setCurrScreen,
+  currIssue,
+  id
 }: {
-  setCurrScreen: React.Dispatch<React.SetStateAction<string>>
+  setCurrScreen: React.Dispatch<React.SetStateAction<string>>,
+  currIssue: string,
+  id: string
 }) {
-  
+
+  const handleCardJammed = async () => {
+    await POST({
+      route: "/sdk/withdraw",
+      data: {
+        atmId: id || "default",
+        cardJammed: true
+      }
+    })
+  }
+
   useEffect(() => {
-    setTimeout(() => {
-      setCurrScreen("enterPin");
-    }, 1500)
+    console.log('currIssue:', currIssue);
+    if (currIssue === "CASH_DISPENSER_JAMMED") {
+      handleCardJammed()
+    } else {
+      setTimeout(() => {
+        setCurrScreen("enterPin");
+      }, 1500)
+    }
   }, [])
 
   return (
