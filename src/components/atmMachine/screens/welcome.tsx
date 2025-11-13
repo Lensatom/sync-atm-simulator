@@ -5,7 +5,7 @@ import { OnScreenSelectionBox } from "@/components/atmSelectionLabel";
 export const WelcomeScreen = ({ setCurrScreen, showButtonClick }: { setCurrScreen: React.Dispatch<React.SetStateAction<string>>, showButtonClick: (name: string) => void }) => {
   const onClickButton = (name: string) => {
     showButtonClick(name);
-    setCurrScreen("enterPin");
+    setCurrScreen("processingCard");
   }
   
   return (

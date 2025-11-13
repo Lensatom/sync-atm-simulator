@@ -48,7 +48,7 @@ export const SelectAmountScreen = ({
     if (name === "a") {
       setCurrScreen("welcome")
     } else {
-      setCurrScreen("withdrawalSuccess");
+      setCurrScreen("dispensationError");
     }
   }
 

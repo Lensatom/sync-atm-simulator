@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useState } from "react";
 import OTPInput from "react-otp-input";
 
-function EnterPin({
+export function EnterPin({
   setCurrScreen,
   showButtonClick
 }: {
@@ -19,8 +19,8 @@ function EnterPin({
       value: "proceed"
     },
     d: {
-      label: "Cancel",
-      value: "cancel"
+      label: "Exit",
+      value: "exit"
     },
   }
 
@@ -76,5 +76,3 @@ function EnterPin({
     </div>
   )
 }
-
-export default EnterPin

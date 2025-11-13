@@ -9,7 +9,9 @@ import { useEffect, useMemo, useState } from "react";
 import { SelectAmountScreen } from "./screens/selectAmount";
 import { WelcomeScreen } from "./screens/welcome";
 import { WithdrawalSuccessScreen } from "./screens/withdrawalSuccess";
-import EnterPin from "./screens/enterPin";
+import { EnterPin } from "./screens/enterPin";
+import { ProcessingCardScreen } from "./screens/processingCard";
+import { DispensationErrorScreen } from "./screens/dispensationError";
 
 type AtmMachineProps = {
   full?: boolean;
@@ -37,9 +39,11 @@ export function AtmMachine({
 
   const screenList:any = useMemo(() => ({
     welcome: <WelcomeScreen setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
+    processingCard: <ProcessingCardScreen setCurrScreen={setCurrScreen} />,
     enterPin: <EnterPin setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
     selectAmount: <SelectAmountScreen setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
-    withdrawalSuccess: <WithdrawalSuccessScreen setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />
+    withdrawalSuccess: <WithdrawalSuccessScreen setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
+    dispensationError: <DispensationErrorScreen setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />
   }), []);
 
   useEffect(() => {
