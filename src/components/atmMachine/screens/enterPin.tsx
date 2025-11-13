@@ -26,7 +26,7 @@ function EnterPin({
 
   const handleButtonClick = (name: string, value: number) => {
     showButtonClick(name);
-    if (name === "f" && pin.length === 4) {
+    if (name === "g" && pin.length === 4) {
       setCurrScreen("selectAmount");
     }
     if (name === "d") {
@@ -64,6 +64,10 @@ function EnterPin({
           borderRadius: 4,
           border: "1px solid rgba(0,0,0,0.3)"
         }}
+        containerStyle={{
+          zIndex: 99
+        }}
+        placeholder="****"
       />
       <OnScreenSelectionBox
         keys={keys}
