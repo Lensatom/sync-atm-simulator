@@ -1,12 +1,36 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { AtmMachine } from "@/components"
+import { GET } from "@/config/axios"
 
 export function AtmStand() {
-  const atmMachines = [1, 2, 3, 4]
+  const [atmMachines, setAtmMachines] = useState([])
   const [activeMachine, setActiveMachine] = useState(0)
 
+  const getAtmMachines = async () => {
+    try {
+      const { data } = await GET({
+        route: "/bank/atm",
+      })
+      setAtmMachines(data)
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getAtmMachines();
+  }, [])
+
+  if (atmMachines.length === 0) {
+    return (
+      <div className="absolute top-0 left-0 flex min-h-screen w-full justify-center items-center">
+        <p>Loading ATM Machines...</p>
+      </div>
+    )
+  }
   return (
     <div className="absolute top-0 left-0 flex min-h-screen w-full justify-center items-center">
       {activeMachine !== 0 && (

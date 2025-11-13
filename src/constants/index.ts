@@ -1,0 +1,1 @@
+export const SERVER_BASE_URL = "https://8deb7e04baf7.ngrok-free.app/api/v1";
