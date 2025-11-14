@@ -25,7 +25,7 @@ export function ProcessingCardScreen({
 
   useEffect(() => {
     console.log('currIssue:', currIssue);
-    if (currIssue === "CASH_DISPENSER_JAMMED") {
+    if (currIssue === "CARD_JAMMED") {
       handleCardJammed()
     } else {
       setTimeout(() => {

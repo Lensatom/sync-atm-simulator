@@ -17,6 +17,7 @@ import { getAtmStateLocal, saveAtmStateLocal } from "@/helpers";
 import { POST, PUT } from "@/config/axios";
 import { log } from "util";
 import { LowCash } from "./screens/lowCash";
+import CardEjectError from "./screens/cardEjectError";
 
 type AtmMachineProps = {
   full?: boolean;
@@ -44,15 +45,11 @@ export function AtmMachine({
   const possibleIssues = [
     "",
     "NETWORK/POWER_OUTAGE",
-    "CONFIGURATION_ISSUE",
-    "TRANSACTION_FAILURE",
-    "SSL_EXPIRED",
-    "MEMORY_FULL",
-    "CASH_DISPENSER_JAMMED",
-    "PRINTER_JAMMED",
+    "CARD_JAMMED",
     "LOW_CASH",
     "CARD_RETAINED",
-    "MALWARE_DETECTED"
+    "CASH_JAMMED",
+    "CARD_EJECT_FAILURE"
   ]
 
   const showButtonClick = (name: string) => {
@@ -91,10 +88,11 @@ export function AtmMachine({
     processingCard: <ProcessingCardScreen id={id} setCurrScreen={setCurrScreen} currIssue={currIssue} />,
     enterPin: <EnterPin id={id} setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
     selectAmount: <SelectAmountScreen id={id} currIssue={currIssue} setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
-    withdrawalSuccess: <WithdrawalSuccessScreen setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
+    withdrawalSuccess: <WithdrawalSuccessScreen id={id} currIssue={currIssue} setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
     dispensationError: <DispensationErrorScreen setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
     noLife: <NoLifeScreen />,
-    lowCash: <LowCash setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />
+    lowCash: <LowCash setCurrScreen={setCurrScreen} showButtonClick={showButtonClick} />,
+    cardEjectError: <CardEjectError id={id} showButtonClick={showButtonClick} setCurrScreen={setCurrScreen} />
   }), [currIssue]);
 
   useEffect(() => {
