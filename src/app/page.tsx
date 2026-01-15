@@ -1,1 +1,1 @@
-export { AtmStand as default } from "@/pages/atmStand";
+export { AtmStand as default } from "@/features/atmStand";
